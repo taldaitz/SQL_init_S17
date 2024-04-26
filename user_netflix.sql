@@ -1,0 +1,120 @@
+INSERT INTO user (lastname,firstname,email,password)
+VALUES
+  ("York","Jamalia","nisl.sem.consequat@outlook.com","QQW74PVN1US"),
+  ("Dillard","Hollee","aptent.taciti@yahoo.org","IOM72PGB2CC"),
+  ("Hendricks","Shay","curabitur.massa@google.net","HEC64MQU4KC"),
+  ("Prince","Lucius","mollis.lectus@yahoo.com","LXX54VKO4PR"),
+  ("Acosta","Portia","sodales.mauris@protonmail.com","JEB50FUG9DF"),
+  ("Gay","Devin","nec.tellus@icloud.net","NWB55VIH3DQ"),
+  ("Joseph","Ayanna","hendrerit.a.arcu@hotmail.edu","WCK62IFI1TX"),
+  ("England","Gannon","rutrum.eu.ultrices@aol.ca","UIT06ZPI5TW"),
+  ("Armstrong","Teagan","scelerisque.sed@aol.edu","BPO62WER0DU"),
+  ("Wells","Ayanna","ac@outlook.ca","YUZ24XNZ3JE");
+INSERT INTO user (lastname,firstname,email,password)
+VALUES
+  ("Melton","Honorato","imperdiet.dictum.magna@icloud.couk","PHV22PJJ6OT"),
+  ("Meyer","Kim","nibh.quisque@hotmail.com","NHN66WYL6WN"),
+  ("Britt","Charlotte","suspendisse.sed.dolor@google.couk","DNF08PQM2BE"),
+  ("Whitley","Amethyst","sit.amet@hotmail.org","CIE94GHY2DC"),
+  ("Kemp","Ronan","blandit@aol.edu","BCO47EIJ4CK"),
+  ("Zamora","Scott","fringilla@google.com","FGX56MVC7HD"),
+  ("Carson","Keegan","pede.malesuada@google.org","IWC72EPS4KL"),
+  ("Charles","Kylynn","mauris@outlook.com","DSI22XLL2AD"),
+  ("Jenkins","Maris","a.tortor@outlook.org","LCU53CCJ4XG"),
+  ("Mclaughlin","Quinn","eget@google.ca","EMJ59WPQ1TT");
+INSERT INTO user (lastname,firstname,email,password)
+VALUES
+  ("Hudson","Glenna","lacinia.mattis@hotmail.org","XWM41HNR2FJ"),
+  ("Workman","Irene","non@outlook.edu","HDB51OPJ4ZV"),
+  ("Galloway","Ila","nascetur.ridiculus.mus@icloud.net","NSN15LER2KR"),
+  ("Carroll","Carson","ante@protonmail.couk","JBY87SPN1LK"),
+  ("Clayton","Griffith","dolor.sit@hotmail.edu","MTQ46WPH7BI"),
+  ("Boyd","Simon","enim.mi@google.edu","POA90WXV2ER"),
+  ("Sharp","Pandora","congue@outlook.org","LAG35LJP1ZU"),
+  ("Wagner","Fitzgerald","risus.donec.nibh@yahoo.ca","XXZ25KSY3SK"),
+  ("O'donnell","Aretha","mauris.morbi@hotmail.org","MTB00FWS1NR"),
+  ("Callahan","Thane","ac@icloud.ca","TYA48KSG2MN");
+INSERT INTO user (lastname,firstname,email,password)
+VALUES
+  ("Mack","Piper","tellus.eu@yahoo.ca","DHQ45FNL4WZ"),
+  ("Reyes","Rana","magna@protonmail.ca","HOY49GOC6GW"),
+  ("Hoover","Roanna","inceptos.hymenaeos@hotmail.ca","QCO86ELI1HT"),
+  ("Joyner","Cruz","arcu.nunc@aol.couk","FMI32CIT7SV"),
+  ("Cotton","Stacy","odio.auctor.vitae@outlook.ca","RFG25ZSH8US"),
+  ("O'connor","Selma","lorem.luctus@icloud.couk","QES67RGF4TB"),
+  ("Key","Damon","lacus.cras.interdum@icloud.org","FJG03XHS5ZW"),
+  ("Kinney","Sopoline","in.tincidunt@icloud.org","EQT21MXG5XV"),
+  ("Hester","Harrison","malesuada@hotmail.edu","YEW77LRC2SX"),
+  ("Sweeney","Zahir","lectus.cum@hotmail.edu","MZI94ZCI7GU");
+INSERT INTO user (lastname,firstname,email,password)
+VALUES
+  ("Pickett","Amir","in.dolor.fusce@hotmail.couk","ZWV25SLW2HH"),
+  ("Pittman","Flynn","natoque.penatibus.et@hotmail.ca","NDJ39XRS5JO"),
+  ("Castillo","Raymond","nulla.eget@outlook.org","DIC52PXG0MO"),
+  ("Mccullough","Geoffrey","elit.pretium@icloud.ca","ADP34WCS6NE"),
+  ("Richard","Elvis","amet.nulla.donec@yahoo.net","MSL91UYY5KH"),
+  ("Schmidt","Emerald","vestibulum.ante@google.ca","PRC65RBX4YT"),
+  ("Pope","Olga","mollis.phasellus.libero@aol.couk","KYU18CRE8EL"),
+  ("Dale","Sonya","fringilla.est.mauris@yahoo.couk","OJY10ENS6VF"),
+  ("Hoffman","Lucian","mauris.erat@yahoo.ca","KAQ17VNY7BP"),
+  ("Cervantes","Adam","luctus@google.org","RLX91YOP9LL");
+INSERT INTO user (lastname,firstname,email,password)
+VALUES
+  ("Patrick","Alexa","et.malesuada@hotmail.couk","CHX29YYK1VJ"),
+  ("Valentine","Lani","rutrum@outlook.edu","XMO25CDY6MT"),
+  ("Watkins","Alika","consectetuer.adipiscing@protonmail.edu","RKQ46QRZ0MM"),
+  ("Cobb","Colt","tellus.phasellus.elit@aol.net","OFU12SRM6RD"),
+  ("King","Unity","dictum.proin@hotmail.ca","UXY73JIO5IT"),
+  ("Calhoun","Lewis","eu.tellus.phasellus@google.net","MFQ28ELZ4KE"),
+  ("Alvarez","Walter","a.tortor.nunc@yahoo.com","WRB51IQR2RR"),
+  ("Brooks","Cameran","felis.eget.varius@aol.edu","SSA54ROC8CR"),
+  ("Morton","Colorado","magna@icloud.ca","XAD12UZZ8BS"),
+  ("Newman","Garrison","molestie.dapibus.ligula@outlook.org","GSP99FRR8DG");
+INSERT INTO user (lastname,firstname,email,password)
+VALUES
+  ("Cote","Candace","nisi.magna@aol.ca","DAF24FVU1GI"),
+  ("Olsen","Macon","sagittis.nullam@protonmail.couk","XGR57NEX3UF"),
+  ("Hopper","India","cum.sociis@icloud.net","PVU46CYM2FR"),
+  ("Cooke","Quynn","fringilla@yahoo.org","BNG31KTY4GU"),
+  ("Morgan","Lucian","congue.in.scelerisque@yahoo.com","MFW42HVR8YO"),
+  ("Garner","Tasha","ornare.elit.elit@hotmail.com","FTS67UQX5IM"),
+  ("Heath","Ursa","dictum.eu@icloud.org","HDF84LFL8OP"),
+  ("Greer","Shea","tincidunt.aliquam.arcu@google.org","JMK25FLM7RO"),
+  ("Larson","Sara","fermentum@protonmail.edu","EHF46ILH2WR"),
+  ("Hurley","Xavier","aliquet.diam.sed@hotmail.edu","GKP99DPZ6TR");
+INSERT INTO user (lastname,firstname,email,password)
+VALUES
+  ("Sharpe","Jennifer","nullam.scelerisque@hotmail.edu","JRR55DYL8EE"),
+  ("Day","Raymond","fermentum@hotmail.com","QRK53GQY8YE"),
+  ("Avila","Fiona","mauris.ipsum@google.net","UWF67VLL4FM"),
+  ("Mcbride","Shelly","orci.luctus@protonmail.org","ZIC93ENW8UZ"),
+  ("Puckett","Carlos","ultricies.ligula@outlook.couk","PBP10WNX4CE"),
+  ("Stuart","Carol","et.netus.et@aol.couk","OIQ85IHH8ZD"),
+  ("Mason","Abel","aenean.euismod@outlook.edu","FJX15CNT2PZ"),
+  ("Jefferson","Thaddeus","mollis.lectus.pede@icloud.couk","TCC15TNU7EE"),
+  ("Dalton","Tamara","dolor.sit@outlook.ca","RYU71CQH6KD"),
+  ("Chavez","Mannix","ipsum.dolor@hotmail.ca","WGR76LML5GR");
+INSERT INTO user (lastname,firstname,email,password)
+VALUES
+  ("Goff","Graiden","nam.nulla@icloud.edu","VNV32TYZ5CR"),
+  ("Tanner","Vance","eu@yahoo.org","XFC48MDB1JN"),
+  ("Burks","Calista","a.arcu@google.couk","DTX12PXR6NQ"),
+  ("Rosales","Alfonso","et@outlook.ca","ZXU27OVQ6YD"),
+  ("Harvey","Michael","donec.luctus@protonmail.net","FMM61BLL3VY"),
+  ("Blanchard","Yen","diam.eu@protonmail.edu","PGJ65YQW5LK"),
+  ("Matthews","Vance","sed.dolor@icloud.couk","EWW87WZD4KY"),
+  ("Huffman","Montana","ac.urna.ut@protonmail.com","FWY01OZF3PB"),
+  ("Velez","Oren","dui.suspendisse.ac@aol.org","DUJ46UUU5ZW"),
+  ("Chapman","Kamal","mollis@aol.com","QQO26FWA6KS");
+INSERT INTO user (lastname,firstname,email,password)
+VALUES
+  ("Mercado","Nyssa","massa.lobortis@icloud.com","TYR16KPD6WF"),
+  ("Langley","Charlotte","cubilia.curae@yahoo.couk","JFH74VXL1UJ"),
+  ("Morin","Dolan","at.sem@icloud.org","DXG82DZS3EF"),
+  ("Delaney","Paki","aenean.euismod@yahoo.edu","XSY75OHM0LV"),
+  ("Norman","Reuben","augue.ut.lacus@yahoo.com","JTU68OCH8FZ"),
+  ("O'brien","Briar","eleifend.non@outlook.ca","HZX60YER4FB"),
+  ("Carey","Caesar","et.risus@hotmail.ca","FXH62LYV2TK"),
+  ("Roy","Jeremy","fusce.aliquam@aol.com","NDP34HHG2QY"),
+  ("Nixon","Caleb","nostra.per@icloud.edu","SRO77ORY9FD"),
+  ("Sears","Carla","eleifend@yahoo.net","XSB23FJS7SS");
