@@ -576,6 +576,7 @@ SELECT bi.*, SUM(li.quantity * pr.unit_price) AS totalAmount
 FROM bill bi
 	JOIN line_item li ON li.bill_id = bi.id
     JOIN product pr ON li.product_id = pr.id
+    JOIN category ca ON pr.category_id = ca.id
 GROUP BY bi.id
 ORDER BY bi.id
 ;
@@ -680,4 +681,380 @@ END//
 
 
 CALL update_vips(25000);
+
+USE billings;
+
+SELECT * FROM customer;
+
+SELECT * FROM customer WHERE id = 4001;
+SELECT * FROM customer WHERE id = 5000;
+
+
+SELECT ROUND(AVG(TIMESTAMPDIFF(YEAR, date_of_birth, NOW())))
+FROM customer;
+
+SELECT *
+FROM customer
+WHERE TIMESTAMPDIFF(YEAR, date_of_birth, NOW()) >= (
+	SELECT ROUND(AVG(TIMESTAMPDIFF(YEAR, date_of_birth, NOW())))
+	FROM customer
+);
+
+USE formation;
+
+
+SELECT * FROM booking;
+
+DELETE FROM booking
+WHERE id = 1;
+
+SET GLOBAL local_infile=1;
+
+USE netflix;
+
+
+LOAD DATA LOCAL INFILE 'C:\\formations\\SQL\\netflix.csv'
+INTO TABLE import_netflix
+FIELDS TERMINATED BY ';'
+IGNORE 1 ROWS;
+
+SELECT * FROM import_netflix WHERE type = 'Movie';
+SELECT * FROM movie;
+SELECT * FROM director;
+
+ALTER TABLE movie MODIFY release_year INT;
+
+ALTER TABLE movie MODIFY country VARCHAR(255);
+
+
+INSERT INTO movie (title, release_year, description, country, director_id)
+SELECT title, release_year, description, country, 1 
+FROM import_netflix
+WHERE type = 'Movie'
+AND release_year REGEXP '^[0-9]+$' = 1
+; 
+
+
+DELETE FROM movie;
+SELECT * FROM movie;
+
+
+
+DELIMITER //
+CREATE PROCEDURE import_movies()
+BEGIN
+
+	DELETE FROM movie;
+    
+    INSERT INTO movie (title, release_year, description, country, director_id)
+	SELECT title, release_year, description, country, 1 
+	FROM import_netflix
+	WHERE type = 'Movie'
+	AND release_year REGEXP '^[0-9]+$' = 1
+	; 
+
+END//
+
+
+CALL import_movies();
+
+SELECT 
+	SUBSTRING_INDEX(director, ' ', 1) AS firstname,
+	SUBSTRING_INDEX(director, ' ', -1) AS lastname
+FROM import_netflix
+WHERE type = 'Movie'
+;
+
+SELECT director
+FROM import_netflix
+WHERE type = 'Movie'
+;
+
+
+USE billings;
+
+
+
+/*-> pour chaque catégorie de produit la somme des facture 
+payées*/
+
+SELECT ca.id, ca.label, SUM(li.quantity * pr.unit_price) AS totalAmount
+FROM bill bi
+	JOIN line_item li ON li.bill_id = bi.id
+    JOIN product pr ON li.product_id = pr.id
+    JOIN category ca ON pr.category_id = ca.id
+WHERE bi.is_paid = true
+GROUP BY ca.id
+;
+
+/*-> par Année de facture la moyenne d'age des clients
+	TIMESTAMPDIFF() -> */
+
+SELECT YEAR(bi.date) AS billYear, AVG(TIMESTAMPDIFF(YEAR, cu.date_of_birth, bi.date)) AS averageAge
+FROM bill bi
+	JOIN customer cu ON cu.id = bi.customer_id
+GROUP BY billYear
+ORDER BY billYear
+;
+
+
+/*-> les nom, prénom et num de tel des clients qui ont
+ commandes des produit de camping ces deux 
+dernières années*/
+
+SELECT cu.lastname, cu.firstname, cu.phone_number
+FROM customer cu
+	JOIN bill bi ON bi.customer_id = cu.id
+    JOIN line_item li ON li.bill_id = bi.id
+    JOIN product pr ON pr.id = li.product_id
+    JOIN category ca ON pr.category_id = ca.id
+WHERE ca.label = 'Camping'
+AND YEAR(bi.date) >= 2022
+GROUP BY cu.id
+ORDER BY cu.id
+;
+
+
+
+SELECT 	ca.label, 
+        CASE WHEN is_paid = 1 THEN 'Factures payées' ELSE 
+			CASE WHEN GROUPING(is_paid) = 1 THEN 'Sous-total : ' ELSE 'Factures impayées' END
+        END AS status,
+        SUM(li.quantity * pr.unit_price) AS totalAmount
+FROM bill bi
+	JOIN line_item li ON li.bill_id = bi.id
+    JOIN product pr ON li.product_id = pr.id
+    JOIN category ca ON pr.category_id = ca.id
+GROUP BY ca.label, bi.is_paid WITH ROLLUP
+;
+
+
+USE netflix;
+
+
+SELECT * FROM import_netflix
+WHERE type = 'Movie';
+
+SELECT * FROM movie
+ORDER BY title;
+
+SELECT * FROM director
+WHERE lastname = 'Scorsese';
+
+
+
+SELECT lastname, firstname, COUNT(*)
+FROM director
+GROUP BY lastname, firstname
+	HAVING COUNT(*) >= 2
+ORDER BY lastname, firstname
+;
+
+WITH director_double AS 
+(
+	SELECT lastname, firstname, COUNT(*)
+	FROM director
+	GROUP BY lastname, firstname
+		HAVING COUNT(*) >= 2
+	ORDER BY lastname, firstname
+)
+
+SELECT COUNT(*) FROM director_double;
+
+
+
+
+SELECT 
+		SUBSTRING_INDEX(director, ' ', 1) AS firstname,
+		SUBSTRING_INDEX(director, ' ', -1) AS lastname
+	FROM import_netflix
+	WHERE type = 'Movie'
+	AND director <> ''
+    GROUP BY lastname, firstname
+    ;
+
+
+DROP PROCEDURE import_movies;
+DELIMITER //
+CREATE PROCEDURE import_movies()
+BEGIN
+
+	/* Gestion des Exceptions dans une procédure stockée */
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+	BEGIN
+		ROLLBACK;
+        SELECT ('Une erreur est survenue durant l\'execution de la procédure.') AS ErrorMessage;
+    END;
+
+    START TRANSACTION;
+    
+	DELETE FROM movie;
+	DELETE FROM director;
+    
+    INSERT INTO director (firstname, lastname)
+    SELECT 
+		SUBSTRING_INDEX(director, ' ', 1) AS firstname,
+		SUBSTRING_INDEX(director, ' ', -1) AS lastname
+	FROM import_netflix
+	WHERE type = 'Movie'
+	AND director <> ''
+    GROUP BY lastname, firstname
+	;
+    
+	IF 	(     
+			WITH director_double AS 
+			(
+				SELECT lastname, firstname, COUNT(*)
+				FROM director
+				GROUP BY lastname, firstname
+					HAVING COUNT(*) >= 2
+				ORDER BY lastname, firstname
+			)
+
+			SELECT COUNT(*) FROM director_double
+		) > 0
+	   THEN ROLLBACK;
+	END IF;
+
+    
+    INSERT INTO movie (title, release_year, description, country, director_id)
+	SELECT title, release_year, description, country, di.id
+	FROM import_netflix imp
+		JOIN director di ON imp.director = CONCAT(di.firstname, ' ', di.lastname)
+	WHERE type = 'Movie'
+    AND release_year REGEXP '^[0-9]+$' = 1
+	; 
+
+	COMMIT;
+END//
+
+
+SELECT * FROM movie;
+SELECT * FROM director;
+
+DELETE FROM movie;
+DELETE FROM director;
+
+CALL import_movies();
+
+SET @nbOfMovies = (SELECT COUNT(*) FROM movie);
+SET @nbOfDirectors = (SELECT COUNT(*) FROM director);
+
+SELECT @nbOfMovies, @nbOfDirectors, @nbOfMovies + @nbOfDirectors AS result;
+
+
+DROP PROCEDURE generate_viewings;
+
+DELIMITER //
+CREATE PROCEDURE generate_viewings(nbViewing INT)
+BEGIN
+
+	SET @nbLoop = 0;
+    
+	REPEAT
+		SET @nbLoop = @nbLoop + 1;
+        
+		SET @userId = (SELECT id FROM user ORDER BY RAND() LIMIT 1);
+		SET @movieId = (SELECT id FROM movie ORDER BY RAND() LIMIT 1);
+
+
+		INSERT INTO viewing (date, user_id, movie_id)
+		VALUES (NOW(), @userId, @movieId);
+        
+	UNTIL @nbLoop >= nbViewing END REPEAT;
+
+END//
+
+
+SELECT * FROM viewing;
+
+CALL generate_viewings(500); 
+
+
+SELECT * FROM import_netflix;
+
+CALL insert_actor ('James Marsden');
+
+CALL insert_cast ('Sofia Carson, Liza Koshy, Ken Jeong, Elizabeth Perkins, Jane Krakowski, Michael McKean, Phil LaMarr');
+
+CALL import_actors();
+
+
+SELECT *
+FROM actor 
+;
+
+
+DELIMITER //
+CREATE PROCEDURE insert_actor(full_name VARCHAR(200))
+BEGIN
+
+	SET @lastname = SUBSTRING_INDEX(full_name, ' ', -1);
+	SET @firstname = SUBSTRING_INDEX(full_name, ' ', 1);
+    
+    IF (SELECT COUNT(*) FROM actor WHERE lastname = @lastname AND firstname = @firstname) = 0
+		THEN
+
+			INSERT INTO actor (lastname, firstname)
+			VALUES (@lastname, @firstname);	
+            
+	END IF;
+
+END//
+
+DROP PROCEDURE insert_cast;
+DELIMITER //
+CREATE PROCEDURE insert_cast(cast TEXT)
+BEGIN
+	
+    REPEAT
+    
+		SET @actor = SUBSTRING_INDEX(cast, ', ', 1);
+		CALL insert_actor(@actor);
+        
+        SET cast = REPLACE(cast, CONCAT(@actor, ', '), '');
+    
+    UNTIL cast = @actor END REPEAT;
+
+END//
+
+
+DROP PROCEDURE import_actors;
+DELIMITER //
+CREATE PROCEDURE import_actors()
+BEGIN
+
+	DECLARE done BOOL DEFAULT false;
+	DECLARE actors TEXT;
+    DECLARE cur CURSOR FOR SELECT cast FROM import_netflix WHERE type = 'Movie' AND cast <> '' LIMIT 20;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = true;
+    
+    OPEN cur;
+    
+    REPEAT 
+		
+        FETCH cur INTO actors;
+        CALL insert_cast(actors);
+    
+    UNTIL done = true END REPEAT;
+    
+    CLOSE cur;
+
+END//
+
+
+/* Création tache plannifié */
+CREATE EVENT daily_import_actors
+	ON SCHEDULE
+		EVERY 1 DAY
+	DO CALL import_actors();
+    
+/* Modification tache plannifié */
+ALTER EVENT daily_import_actors
+	ON SCHEDULE
+		EVERY 1 DAY
+		STARTS '2024-04-27 01:00:00'
+	DO CALL import_actors();
+
+
 
